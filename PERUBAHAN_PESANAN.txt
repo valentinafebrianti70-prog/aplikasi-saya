@@ -1,0 +1,84 @@
+Sistem Pesanan E-Commerce - Dokumentasi Perbaikan
+=====================================================
+
+## Perubahan yang Dilakukan
+
+### 1. Database Setup (setup_db.php)
+File ini membuat struktur database yang diperlukan:
+- Tabel `pesanan_detail`: Menyimpan detail item dalam setiap pesanan
+- Kolom tambahan di tabel `pesanan`: 
+  * metode_pembayaran
+  * nama_penerima
+  * nomor_telpon
+  * alamat_lengkap
+  * kota
+  * kode_pos
+
+### 2. Backend: simpan_pesanan.php
+Menerima data pesanan dari frontend via POST (JSON) dan:
+- Memvalidasi data pelanggan
+- Menyimpan pesanan utama ke tabel `pesanan`
+- Menyimpan detail item ke tabel `pesanan_detail`
+- Mengembalikan ID pesanan yang berhasil dibuat
+
+### 3. Backend: get_detail_pesanan.php
+Mengambil detail pesanan dari database berdasarkan ID:
+- Data pesanan (nomor, tanggal, status, dll)
+- Daftar produk yang dibeli (dari pesanan_detail)
+- Format respons: JSON
+
+### 4. Frontend: dashboard_pelanggan.php
+Perubahan pada JavaScript:
+
+a) Form Pembayaran - Tambah ID pada input fields:
+   - id="form-nama" (Nama Penerima)
+   - id="form-telpon" (Nomor Telepon)
+   - id="form-alamat" (Alamat Lengkap)
+   - id="form-kota" (Kota)
+   - id="form-kodepos" (Kode Pos)
+
+b) Fungsi prosesCheckout():
+   - Validasi form terlebih dahulu
+   - Mengumpulkan data: keranjang, subtotal, ongkir, diskon, metode pembayaran, alamat
+   - Mengirim via AJAX ke simpan_pesanan.php
+   - Jika berhasil: tampilkan notifikasi, kosongkan keranjang, reload halaman
+   - Jika gagal: tampilkan error message
+
+c) Fungsi showModalDetail():
+   - Mengambil data dari get_detail_pesanan.php
+   - Menampilkan detail pesanan lengkap
+   - Menampilkan daftar produk dengan harga dan jumlah
+   - Tampilan lebih detail dan informatif
+
+## Alur Kerja Sistem
+
+1. Pelanggan memilih produk → Tambah ke keranjang
+2. Pelanggan navigasi ke halaman Pembayaran
+3. Isi form pengiriman (nama, telepon, alamat, kota, kodepos)
+4. Pilih metode pembayaran
+5. Klik "Bayar Sekarang"
+6. Frontend kirim data ke simpan_pesanan.php
+7. Backend simpan pesanan ke database
+8. Frontend reload halaman
+9. Pesanan sekarang terlihat di halaman "Pesanan Saya"
+10. Pelanggan bisa klik "Detail" untuk lihat produk apa yang dibeli
+
+## Testing
+
+1. Jalankan setup_db.php sekali untuk initialize database
+2. Login sebagai pelanggan
+3. Tambah produk ke keranjang
+4. Ke halaman Pembayaran dan isi form
+5. Klik "Bayar Sekarang"
+6. Verifikasi pesanan muncul di "Pesanan Saya"
+7. Klik "Detail" untuk lihat produk yang dibeli
+
+## File yang Ditambah
+
+1. setup_db.php - Database initialization
+2. simpan_pesanan.php - Save order to database
+3. get_detail_pesanan.php - Get order details
+
+## File yang Dimodifikasi
+
+1. dashboard_pelanggan.php - Frontend updates untuk proses pesanan
