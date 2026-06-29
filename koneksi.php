@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "db_penjualan_perlengkapan_sekolah";
+$user = "if0_42300102";
+$pass = "5LN4vMcivz";
+$db   = "if0_42300102_db_perlengkapan_sekolah";
 $port = 3306;
 
 // Tampilkan error PHP untuk debugging sementara
