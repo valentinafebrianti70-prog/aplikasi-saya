@@ -1,5 +1,5 @@
 <?php
-$host = "localhost";
+$host = "sql202.infinityfree.com";
 $user = "if0_42300102";
 $pass = "5LN4vMcivz";
 $db   = "if0_42300102_db_perlengkapan_sekolah";
